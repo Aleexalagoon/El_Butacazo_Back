@@ -1,0 +1,6 @@
+@El_Butacazo_Back_HostAddress = http://localhost:5073
+
+GET {{El_Butacazo_Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
