@@ -8,11 +8,11 @@ public class Butacas {
     public bool Estado {get;set;}
 
 
-public Butacas (int fila, int columna) {
+public Butacas (int fila, int columna, bool estado) {
     Id = nextId++;
     Fila = fila;
     Columna = columna;
-
+    Estado = estado;
 }
 
     public override void MostrarDetalles(){
