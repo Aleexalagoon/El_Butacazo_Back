@@ -20,5 +20,8 @@ public Entradas(Peliculas pelicula, Salas sala, Butacas butaca, string hora, str
     Cantidad = cantidad;
     }
 
-    public abstract void MostrarDetalles();
+    public abstract void MostrarDetalles(){
+    Console.WriteLine($"Peliculas: {Peliculas}, Salas: {Salas} Butacas:{Butacas}, Hora:{Horas}, Precio:{Precio}, Cantidad:{Cantidad}.");
 }
+}
+

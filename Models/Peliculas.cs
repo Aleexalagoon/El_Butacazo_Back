@@ -20,6 +20,8 @@ public Peliculas(string titulo, string genero, string director, string estreno, 
     Calificacion = calificacion;
     }
 
-    public abstract void MostrarDetalles();
+    public abstract void MostrarDetalles(){
+        Console.WriteLine($"Titulo:{Titulo},Genero:{Genero}, Director:{Director}, Estreno:{Estreno}, Duracion:{Duracion}, Calificacion:{Calificacion}.");
+    }
+    
 }
-
