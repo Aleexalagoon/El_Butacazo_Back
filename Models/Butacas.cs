@@ -2,21 +2,16 @@ namespace Models;
 
 public class Butacas {
     public static int nextId = 1;
-    public int Id {get; private set;}
-    public int Fila {get;set;}
-    public int Columna {get;set;}
-    public bool Estado {get;set;}
+    public int Id { get; private set; }
+    public int Fila { get; set; }
+    public int Columna { get; set; }
+    public bool Estado { get; set; }
 
-
-public Butacas (int fila, int columna, bool estado) {
-    Id = nextId++;
-    Fila = fila;
-    Columna = columna;
-    Estado = estado;
-}
-
-    public override void MostrarDetalles(){
-        Console.WriteLine($"Fila:{Fila}, Columna:{Columna} Estado:{Estado}");
+    public Butacas(int fila, int columna, bool estado) {
+        Id = nextId++;
+        Fila = fila;
+        Columna = columna;
+        Estado = estado;
     }
-
 }
+
