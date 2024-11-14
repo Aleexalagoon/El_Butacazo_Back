@@ -68,7 +68,7 @@ namespace El_Butacazo_Back.Controllers
         {
             peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m"));
             peliculas.Add(new Peliculas("Venom 3", "Acción", "Andy Serkis", "2024-10-18", "1h 52m"));
-            peliculas.Add(new Peliculas("Torrente 1", "", "Santiago Segura", "1998-03-13","1h 37m"));
+            peliculas.Add(new Peliculas("Torrente 1", "Comedia", "Santiago Segura", "1998-03-13","1h 37m"));
             peliculas.Add(new Peliculas("Torrente 2", "Comedia", "Santiago Segura", "2001-03-30","1h 39m"));
             peliculas.Add(new Peliculas("Torrente 3", "Comedia", "Santiago Segura", "2005-09-30","1h 37m"));
             peliculas.Add(new Peliculas("Torrente 4", "Comedia", "Santiago Segura", "2011-03-11","1h 33m"));
