@@ -8,15 +8,13 @@ public class Peliculas {
     public string Director { get; set; }
     public string Estreno { get; set; }
     public string Duracion { get; set; }
-    public string Calificacion { get; set; }
 
-    public Peliculas(string titulo, string genero, string director, string estreno, string duracion, string calificacion) {
+    public Peliculas(string titulo, string genero, string director, string estreno, string duracion) {
         Id = nextId++;
         Titulo = titulo;
         Genero = genero;
         Director = director;
         Estreno = estreno;
         Duracion = duracion;
-        Calificacion = calificacion;
     }
 }

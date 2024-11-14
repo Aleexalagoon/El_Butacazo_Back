@@ -45,7 +45,7 @@ namespace El_Butacazo_Back.Controllers
             }
             entrada.Pelicula = updatedEntrada.Pelicula;
             entrada.Sesion = updatedEntrada.Sesion;
-            entrada.Butaca = updatedEntrada.Butaca;
+            entrada.Putaca = updatedEntrada.Putaca;
             entrada.Hora = updatedEntrada.Hora;
             entrada.Precio = updatedEntrada.Precio;
             entrada.Cantidad = updatedEntrada.Cantidad;
@@ -65,10 +65,10 @@ namespace El_Butacazo_Back.Controllers
         }
    public static void InicializarDatos()
 {
-    var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "7.5");
+    var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m");
     
-    var sesion = new Sesiones(1, pelicula, 100);
-    var butaca = new Butacas(1, 1, true);
+    var sesion = new Sesiones(1, "13:33", pelicula);
+    var butaca = new Putacas(1, 1);
 
     entradas.Add(new Entradas(pelicula, sesion, butaca, "18:00", "10.00", "1"));
 }

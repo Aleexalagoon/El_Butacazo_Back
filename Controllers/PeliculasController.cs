@@ -48,7 +48,6 @@ namespace El_Butacazo_Back.Controllers
             pelicula.Director = updatedPelicula.Director;
             pelicula.Estreno = updatedPelicula.Estreno;
             pelicula.Duracion = updatedPelicula.Duracion;
-            pelicula.Calificacion = updatedPelicula.Calificacion;
             
             return NoContent();
         }
@@ -67,8 +66,8 @@ namespace El_Butacazo_Back.Controllers
 
         public static void InicializarDatos()
         {
-            peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "7.5"));
-            peliculas.Add(new Peliculas("Venom 3", "Acción", "Andy Serkis", "2024-10-18", "1h 52m", "6.9"));
+            peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m"));
+            peliculas.Add(new Peliculas("Venom 3", "Acción", "Andy Serkis", "2024-10-18", "1h 52m"));
         }
     }
 }

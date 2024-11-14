@@ -1,3 +1,5 @@
+using El_Butacazo_Back.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,4 +24,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+PeliculasController.InicializarDatos();
+SesionesController.InicializarDatos();
+EntradasController.InicializarDatos();
 app.Run();

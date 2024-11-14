@@ -45,7 +45,6 @@ namespace El_Butacazo_Back.Controllers
             }
             sesion.Numero = updatedSesion.Numero;
             sesion.Pelicula = updatedSesion.Pelicula;
-            sesion.Capacidad = updatedSesion.Capacidad;
             return NoContent();
         }
 
@@ -63,8 +62,8 @@ namespace El_Butacazo_Back.Controllers
 
         public static void InicializarDatos()
         {
-            var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "7.5");
-            sesiones.Add(new Sesiones(1, pelicula, 100));
+            var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m");
+            sesiones.Add(new Sesiones(1, "13:33", pelicula));
         }
     }
 }
