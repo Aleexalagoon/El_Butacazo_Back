@@ -3,13 +3,13 @@ using Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElButacazoAPI.Controllers
+namespace El_Butacazo_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PeliculasController : ControllerBase
     {
-        private static List<Peliculas> peliculas = new List<Peliculas>();
+        public static List<Peliculas> peliculas = new List<Peliculas>();
 
         [HttpGet]
         public ActionResult<IEnumerable<Peliculas>> GetPeliculas()

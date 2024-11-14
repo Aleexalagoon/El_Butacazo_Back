@@ -3,7 +3,7 @@ using Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElButacazoAPI.Controllers
+namespace El_Butacazo_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -44,7 +44,7 @@ namespace ElButacazoAPI.Controllers
                 return NotFound();
             }
             entrada.Pelicula = updatedEntrada.Pelicula;
-            entrada.Sala = updatedEntrada.Sala;
+            entrada.Sesion = updatedEntrada.Sesion;
             entrada.Butaca = updatedEntrada.Butaca;
             entrada.Hora = updatedEntrada.Hora;
             entrada.Precio = updatedEntrada.Precio;
@@ -67,10 +67,10 @@ namespace ElButacazoAPI.Controllers
 {
     var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "7.5");
     
-    var sala = new Salas(1, pelicula, 100);
+    var sesion = new Sesiones(1, pelicula, 100);
     var butaca = new Butacas(1, 1, true);
 
-    entradas.Add(new Entradas(pelicula, sala, butaca, "18:00", "10.00", "1"));
+    entradas.Add(new Entradas(pelicula, sesion, butaca, "18:00", "10.00", "1"));
 }
 }
 }
