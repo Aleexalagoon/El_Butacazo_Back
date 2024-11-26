@@ -9,63 +9,88 @@ namespace El_Butacazo_Back.Controllers
     [ApiController]
     public class PeliculasController : ControllerBase
     {
+        // LISTA ESTÁTICA PARA ALMACENAR LAS PELÍCULAS
         public static List<Peliculas> peliculas = new List<Peliculas>();
 
+        // MÉTODO PARA OBTENER TODAS LAS PELÍCULAS
         [HttpGet]
         public ActionResult<IEnumerable<Peliculas>> GetPeliculas()
         {
-            return Ok(peliculas);
+            return Ok(peliculas); // DEVUELVE LA LISTA COMPLETA DE PELÍCULAS
         }
 
+        // MÉTODO PARA OBTENER UNA PELÍCULA POR SU ID
         [HttpGet("{id}")]
         public ActionResult<Peliculas> GetPelicula(int id)
         {
+            // BUSCA LA PELÍCULA POR SU ID
             var pelicula = peliculas.FirstOrDefault(p => p.Id == id);
             if (pelicula == null)
             {
-                return NotFound();
+                return NotFound(); // DEVUELVE ERROR SI NO SE ENCUENTRA LA PELÍCULA
             }
-            return Ok(pelicula);
+            return Ok(pelicula); // DEVUELVE LA PELÍCULA ENCONTRADA
         }
 
+        // MÉTODO PARA CREAR UNA NUEVA PELÍCULA
         [HttpPost]
         public ActionResult<Peliculas> CreatePelicula(Peliculas pelicula)
         {
-            peliculas.Add(pelicula);
-            return CreatedAtAction(nameof(GetPelicula), new { id = pelicula.Id }, pelicula);
+            // CREA UNA NUEVA INSTANCIA DE PELÍCULA CON LOS DATOS PROPORCIONADOS
+            var nuevaPelicula = new Peliculas(
+                pelicula.Titulo, 
+                pelicula.Genero, 
+                pelicula.Director, 
+                pelicula.Estreno, 
+                pelicula.Duracion, 
+                pelicula.Imagen
+            );
+
+            peliculas.Add(nuevaPelicula); // AÑADE LA NUEVA PELÍCULA A LA LISTA
+            return CreatedAtAction(nameof(GetPelicula), new { id = nuevaPelicula.Id }, nuevaPelicula); // DEVUELVE LA PELÍCULA CREADA
         }
 
+        // MÉTODO PARA ACTUALIZAR UNA PELÍCULA EXISTENTE
         [HttpPut("{id}")]
         public IActionResult UpdatePelicula(int id, Peliculas updatedPelicula)
         {
+            // BUSCA LA PELÍCULA POR SU ID
             var pelicula = peliculas.FirstOrDefault(p => p.Id == id);
             if (pelicula == null)
             {
-                return NotFound();
+                return NotFound(); // DEVUELVE ERROR SI NO SE ENCUENTRA LA PELÍCULA
             }
+
+            // ACTUALIZA LOS DATOS DE LA PELÍCULA
             pelicula.Titulo = updatedPelicula.Titulo;
             pelicula.Genero = updatedPelicula.Genero;
             pelicula.Director = updatedPelicula.Director;
             pelicula.Estreno = updatedPelicula.Estreno;
             pelicula.Duracion = updatedPelicula.Duracion;
-            
-            return NoContent();
+            pelicula.Imagen = updatedPelicula.Imagen;
+
+            return NoContent(); // DEVUELVE RESPUESTA SIN CONTENIDO
         }
 
+        // MÉTODO PARA ELIMINAR UNA PELÍCULA
         [HttpDelete("{id}")]
         public IActionResult DeletePelicula(int id)
         {
+            // BUSCA LA PELÍCULA POR SU ID
             var pelicula = peliculas.FirstOrDefault(p => p.Id == id);
             if (pelicula == null)
             {
-                return NotFound();
+                return NotFound(); // DEVUELVE ERROR SI NO SE ENCUENTRA LA PELÍCULA
             }
-            peliculas.Remove(pelicula);
-            return NoContent();
+
+            peliculas.Remove(pelicula); // ELIMINA LA PELÍCULA DE LA LISTA
+            return NoContent(); // DEVUELVE RESPUESTA SIN CONTENIDO
         }
 
+        // MÉTODO ESTÁTICO PARA INICIALIZAR LOS DATOS DE LAS PELÍCULAS
         public static void InicializarDatos()
         {
+            // AÑADE LAS PELICULAS A LA LISTA
             peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "https://pics.filmaffinity.com/Shin_Chan_El_superhaeroe-906956455-large.jpg"));
             peliculas.Add(new Peliculas("Venom 3", "Acción", "Andy Serkis", "2024-10-18", "1h 52m", "https://pics.filmaffinity.com/Venom_El_aultimo_baile-379990903-large.jpg"));
             peliculas.Add(new Peliculas("Torrente 1", "Comedia", "Santiago Segura", "1998-03-13","1h 37m", "https://pics.filmaffinity.com/torrente_el_brazo_tonto_de_la_ley-769153589-large.jpg"));

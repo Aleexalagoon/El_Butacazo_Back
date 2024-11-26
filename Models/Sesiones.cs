@@ -1,31 +1,32 @@
 namespace Models;
 
-public class Sesiones {
+public class Sesiones
+{
     public static int nextId = 1;
-    public int Id { get; private set; }
-    public int Numero { get; set; }
-    public string Hora {get; set;}
-    public Peliculas Pelicula { get; set; }
-    public List <Putacas> Putacas {get;set;}
-    public List <Entradas> Entrada {get;set;}
+    public int Id { get; private set; }               
+    public int Numero { get; set; }                  
+    public string Hora { get; set; }                 
+    public Peliculas Pelicula { get; set; }          
+    public List<Putacas> Putacas { get; set; }       
+    public List<Entradas> Entrada { get; set; }      
 
+    public Sesiones(int numero, string hora, Peliculas pelicula)
+    {
+        Id = nextId++;         
+        Numero = numero;       
+        Hora = hora;           
+        Pelicula = pelicula;   
+        Putacas = new List<Putacas>(); 
+        Entrada = new List<Entradas>(); 
 
-    public Sesiones(int numero, string hora, Peliculas pelicula) {
-        Id = nextId++;
-        Numero = numero;
-        Hora = hora;
-        Pelicula = pelicula;
-        Putacas = new List<Putacas>();
-        Entrada = new List<Entradas>();
-        for (int x = 1; x < 10; x++)
+        // GENERAR UNA MATRIZ DE BUTACAS (9x9)
+        for (int x = 1; x <= 9; x++) // FILAS (DEL 1 AL 9)
         {
-            for(int y =1; y < 10; y++)
+            for (int y = 1; y <= 9; y++) // COLUMNAS (DEL 1 AL 9)
             {
-                Putacas Putaca = new Putacas(x,y);
-                Putacas.Add(Putaca);
-                Console.Write(Putaca);
+                Putacas.Add(new Putacas(x, y)); // CREA Y AÑADE UNA NUEVA BUTACA
             }
-            Console.WriteLine("");
         }
     }
 }
+

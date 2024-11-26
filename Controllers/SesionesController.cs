@@ -9,61 +9,204 @@ namespace El_Butacazo_Back.Controllers
     [ApiController]
     public class SesionesController : ControllerBase
     {
-        private static List<Sesiones> sesiones = new List<Sesiones>();
+        // LISTA ESTÁTICA PARA ALMACENAR SESIONES
+        public static List<Sesiones> sesiones = new List<Sesiones>();
 
+        // CONSTRUCTOR ESTÁTICO QUE INICIALIZA LAS SESIONES
+        static SesionesController()
+        {
+            InicializarSesiones();
+        }
+
+        // MÉTODO ESTÁTICO PARA INICIALIZAR LAS SESIONES
+        public static void InicializarSesiones()
+        {
+            if (!sesiones.Any()) // VERIFICA SI LA LISTA DE SESIONES ESTÁ VACÍA
+            {
+                // INICIALIZA LAS PELÍCULAS SI NO LO ESTÁN
+                PeliculasController.InicializarDatos();
+
+                // OBTIENE LAS PELÍCULAS DISPONIBLES
+                var peliculas = PeliculasController.peliculas;
+
+                // CREA SESIONES PARA CADA PELÍCULA EN HORARIOS DISTINTOS
+                int numeroSesion = 1; // CONTADOR PARA IDENTIFICAR LAS SESIONES
+
+                foreach (var pelicula in peliculas)
+                {
+                    sesiones.Add(new Sesiones(numeroSesion++, "16:00", pelicula));
+                    sesiones.Add(new Sesiones(numeroSesion++, "17:30", pelicula));
+                    sesiones.Add(new Sesiones(numeroSesion++, "19:00", pelicula));
+                    sesiones.Add(new Sesiones(numeroSesion++, "20:30", pelicula));
+                    sesiones.Add(new Sesiones(numeroSesion++, "21:00", pelicula));
+                    sesiones.Add(new Sesiones(numeroSesion++, "22:30", pelicula));
+                }
+            }
+        }
+
+        // OBTIENE TODAS LAS SESIONES DISPONIBLES
         [HttpGet]
         public ActionResult<IEnumerable<Sesiones>> GetSesiones()
         {
-            return Ok(sesiones);
+            return Ok(sesiones); // DEVUELVE LA LISTA DE SESIONES
         }
 
+        // OBTIENE UNA SESIÓN POR SU ID
         [HttpGet("{id}")]
-        public ActionResult<Sesiones> GetSesion(int id)
+        public ActionResult<Sesiones> GetSesionById(int id)
         {
-            var sesion = sesiones.FirstOrDefault(s => s.Id == id);
+            var sesion = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
             if (sesion == null)
             {
-                return NotFound();
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
             }
-            return Ok(sesion);
+
+            return Ok(sesion); // DEVUELVE LA SESIÓN ENCONTRADA
         }
 
+        // AÑADE UNA NUEVA SESIÓN
         [HttpPost]
-        public ActionResult<Sesiones> CreateSesion(Sesiones sesion)
+        public ActionResult<Sesiones> AddSesion(Sesiones nuevaSesion)
         {
-            sesiones.Add(sesion);
-            return CreatedAtAction(nameof(GetSesion), new { id = sesion.Id }, sesion);
+            if (nuevaSesion == null)
+            {
+                return BadRequest("La sesión no puede ser nula."); // DEVUELVE ERROR SI EL OBJETO ES NULO
+            }
+
+            // ASIGNA UN NUEVO ID A LA SESIÓN Y LA AGREGA A LA LISTA
+            nuevaSesion.Id = sesiones.Any() ? sesiones.Max(s => s.Id) + 1 : 1;
+            sesiones.Add(nuevaSesion);
+
+            // DEVUELVE LA NUEVA SESIÓN CREADA
+            return CreatedAtAction(nameof(GetSesionById), new { id = nuevaSesion.Id }, nuevaSesion);
         }
 
+        // ACTUALIZA UNA SESIÓN EXISTENTE
         [HttpPut("{id}")]
-        public IActionResult UpdateSesion(int id, Sesiones updatedSesion)
+        public ActionResult UpdateSesion(int id, Sesiones sesionActualizada)
         {
-            var sesion = sesiones.FirstOrDefault(s => s.Id == id);
-            if (sesion == null)
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
             {
-                return NotFound();
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
             }
-            sesion.Numero = updatedSesion.Numero;
-            sesion.Pelicula = updatedSesion.Pelicula;
-            return NoContent();
+
+            // ACTUALIZA LOS DATOS DE LA SESIÓN
+            sesionExistente.Numero = sesionActualizada.Numero;
+            sesionExistente.Hora = sesionActualizada.Hora;
+            sesionExistente.Pelicula = sesionActualizada.Pelicula;
+
+            return NoContent(); // DEVUELVE RESPUESTA SIN CONTENIDO
         }
 
+        // ELIMINA UNA SESIÓN EXISTENTE
         [HttpDelete("{id}")]
-        public IActionResult DeleteSesion(int id)
+        public ActionResult DeleteSesion(int id)
         {
-            var sesion = sesiones.FirstOrDefault(s => s.Id == id);
-            if (sesion == null)
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
             {
-                return NotFound();
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
             }
-            sesiones.Remove(sesion);
-            return NoContent();
+
+            // ELIMINA LA SESIÓN DE LA LISTA
+            sesiones.Remove(sesionExistente);
+
+            return NoContent(); // DEVUELVE RESPUESTA SIN CONTENIDO
         }
 
-        public static void InicializarDatos()
+        // OBTIENE LAS BUTACAS DE UNA SESIÓN
+        [HttpGet("{id}/butacas")]
+        public ActionResult<IEnumerable<Putacas>> GetButacasBySesionId(int id)
         {
-            var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m");
-            sesiones.Add(new Sesiones(1, "13:33", pelicula));
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
+            {
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
+            }
+
+            return Ok(sesionExistente.Putacas); // DEVUELVE LAS BUTACAS DISPONIBLES
+        }
+
+        // RESERVA BUTACAS DE UNA SESIÓN
+        [HttpPut("{id}/butacas")]
+        public ActionResult ReservarPutacas(int id, [FromBody] List<int> idsPutacas)
+        {
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
+            {
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
+            }
+
+            foreach (var idPutaca in idsPutacas)
+            {
+                var putaca = sesionExistente.Putacas.FirstOrDefault(p => p.Id == idPutaca); // BUSCA LA BUTACA POR ID
+
+                if (putaca == null)
+                {
+                    return NotFound($"Butaca con ID {idPutaca} no encontrada en esta sesión."); // DEVUELVE ERROR SI NO EXISTE
+                }
+
+                if (putaca.Estado)
+                {
+                    return BadRequest($"La butaca con ID {idPutaca} ya está reservada."); // DEVUELVE ERROR SI YA ESTÁ RESERVADA
+                }
+
+                putaca.Estado = true; // MARCA LA BUTACA COMO RESERVADA
+            }
+
+            return Ok("Butacas reservadas con éxito."); // CONFIRMA LAS RESERVAS
+        }
+
+        // DESOCUPA BUTACAS DE UNA SESIÓN
+        [HttpPut("{id}/butacas/desocupar")]
+        public ActionResult DesocuparPutacas(int id, [FromBody] List<int> idsPutacas)
+        {
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
+            {
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
+            }
+
+            foreach (var idPutaca in idsPutacas)
+            {
+                var putaca = sesionExistente.Putacas.FirstOrDefault(p => p.Id == idPutaca); // BUSCA LA BUTACA POR ID
+
+                if (putaca == null)
+                {
+                    return NotFound($"Butaca con ID {idPutaca} no encontrada en esta sesión."); // DEVUELVE ERROR SI NO EXISTE
+                }
+
+                if (!putaca.Estado)
+                {
+                    return BadRequest($"La butaca con ID {idPutaca} ya está desocupada."); // DEVUELVE ERROR SI YA ESTÁ LIBRE
+                }
+
+                putaca.Estado = false; // MARCA LA BUTACA COMO DESOCUPADA
+            }
+
+            return Ok("Butacas desocupadas con éxito."); // CONFIRMA LAS DESOCUPACIONES
+        }
+
+        // OBTIENE LAS ENTRADAS DE UNA SESIÓN
+        [HttpGet("{id}/entradas")]
+        public ActionResult<IEnumerable<Entradas>> GetEntradasBySesionId(int id)
+        {
+            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
+
+            if (sesionExistente == null)
+            {
+                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
+            }
+
+            return Ok(sesionExistente.Entrada); // DEVUELVE LAS ENTRADAS ASOCIADAS
         }
     }
 }
+

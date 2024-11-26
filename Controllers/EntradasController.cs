@@ -7,72 +7,62 @@ namespace El_Butacazo_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EntradasController : ControllerBase
+    public class EntradaController : ControllerBase
     {
-        private static List<Entradas> entradas = new List<Entradas>();
+        // LISTA ESTÁTICA PARA ALMACENAR LAS ENTRADAS
+        private static List<Entrada> entradas = new List<Entrada>();
 
+        // MÉTODO PARA OBTENER TODAS LAS ENTRADAS
         [HttpGet]
-        public ActionResult<IEnumerable<Entradas>> GetEntradas()
+        public ActionResult<IEnumerable<Entrada>> GetEntradas()
         {
-            return Ok(entradas);
+            return Ok(entradas); // DEVUELVE TODAS LAS ENTRADAS EXISTENTES
         }
 
+        // MÉTODO PARA OBTENER UNA ENTRADA POR SU ID
         [HttpGet("{id}")]
-        public ActionResult<Entradas> GetEntrada(int id)
+        public ActionResult<Entrada> GetEntrada(int id)
         {
+            // BUSCA LA ENTRADA EN LA LISTA POR SU ID
             var entrada = entradas.FirstOrDefault(e => e.Id == id);
             if (entrada == null)
             {
-                return NotFound();
+                return NotFound(); // DEVUELVE ERROR SI NO SE ENCUENTRA LA ENTRADA
             }
-            return Ok(entrada);
+            return Ok(entrada); // DEVUELVE LA ENTRADA ENCONTRADA
         }
 
+        // MÉTODO PARA CREAR UNA NUEVA ENTRADA
         [HttpPost]
-        public ActionResult<Entradas> CreateEntrada(Entradas entrada)
+        public ActionResult<Entrada> CreateEntrada(Entrada entrada)
         {
-            entradas.Add(entrada);
-            return CreatedAtAction(nameof(GetEntrada), new { id = entrada.Id }, entrada);
+            // CREA UNA NUEVA INSTANCIA DE ENTRADA CON LOS DATOS PROPORCIONADOS
+            var nuevaEntrada = new Entrada(
+                entradas.Any() ? entradas.Max(e => e.Id) + 1 : 1, // ASIGNA UN ID ÚNICO
+                entrada.Fecha, // COPIA LA FECHA PROPORCIONADA
+                entrada.Precio // COPIA EL PRECIO PROPORCIONADO
+            );
+
+            entradas.Add(nuevaEntrada); // AGREGA LA NUEVA ENTRADA A LA LISTA
+            return CreatedAtAction(nameof(GetEntrada), new { id = nuevaEntrada.Id }, nuevaEntrada); // DEVUELVE LA ENTRADA CREADA
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateEntrada(int id, Entradas updatedEntrada)
-        {
-            var entrada = entradas.FirstOrDefault(e => e.Id == id);
-            if (entrada == null)
-            {
-                return NotFound();
-            }
-            entrada.Pelicula = updatedEntrada.Pelicula;
-            entrada.Sesion = updatedEntrada.Sesion;
-            entrada.Putaca = updatedEntrada.Putaca;
-            entrada.Hora = updatedEntrada.Hora;
-            entrada.Precio = updatedEntrada.Precio;
-            entrada.Cantidad = updatedEntrada.Cantidad;
-            return NoContent();
-        }
-
+        // MÉTODO PARA ELIMINAR UNA ENTRADA POR SU ID
         [HttpDelete("{id}")]
         public IActionResult DeleteEntrada(int id)
         {
+            // BUSCA LA ENTRADA EN LA LISTA POR SU ID
             var entrada = entradas.FirstOrDefault(e => e.Id == id);
             if (entrada == null)
             {
-                return NotFound();
+                return NotFound(); // DEVUELVE ERROR SI NO SE ENCUENTRA LA ENTRADA
             }
-            entradas.Remove(entrada);
-            return NoContent();
-        }
-   public static void InicializarDatos()
-{
-    var pelicula = new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m");
-    
-    var sesion = new Sesiones(1, "13:33", pelicula);
-    var butaca = new Putacas(1, 1);
 
-    entradas.Add(new Entradas(pelicula, sesion, butaca, "18:00", "10.00", "1"));
+            entradas.Remove(entrada); // ELIMINA LA ENTRADA DE LA LISTA
+            return NoContent(); // DEVUELVE RESPUESTA SIN CONTENIDO
+        }
+    }
 }
-}
-}
+
 
 
