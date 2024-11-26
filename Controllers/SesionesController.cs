@@ -23,9 +23,7 @@ namespace El_Butacazo_Back.Controllers
         {
             if (!sesiones.Any()) // VERIFICA SI LA LISTA DE SESIONES ESTÁ VACÍA
             {
-                // INICIALIZA LAS PELÍCULAS SI NO LO ESTÁN
-                PeliculasController.InicializarDatos();
-
+              
                 // OBTIENE LAS PELÍCULAS DISPONIBLES
                 var peliculas = PeliculasController.peliculas;
 
