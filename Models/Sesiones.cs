@@ -8,7 +8,7 @@ public class Sesiones
     public string Hora { get; set; }                 
     public Peliculas Pelicula { get; set; }          
     public List<Putacas> Putacas { get; set; }       
-    public List<Entradas> Entrada { get; set; }      
+    public List<Entradas> Entradas { get; set; }      
 
     public Sesiones(int numero, string hora, Peliculas pelicula)
     {
@@ -17,7 +17,7 @@ public class Sesiones
         Hora = hora;           
         Pelicula = pelicula;   
         Putacas = new List<Putacas>(); 
-        Entrada = new List<Entradas>(); 
+        Entradas = new List<Entradas>(); 
 
         // GENERAR UNA MATRIZ DE BUTACAS (9x9)
         for (int x = 1; x <= 9; x++) // FILAS (DEL 1 AL 9)

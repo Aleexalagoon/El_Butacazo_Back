@@ -15,11 +15,11 @@ namespace El_Butacazo_Back.Controllers
         // CONSTRUCTOR ESTÁTICO QUE INICIALIZA LAS SESIONES
         static SesionesController()
         {
-            InicializarSesiones();
+            InicializarDatos();
         }
 
         // MÉTODO ESTÁTICO PARA INICIALIZAR LAS SESIONES
-        public static void InicializarSesiones()
+        public static void InicializarDatos()
         {
             if (!sesiones.Any()) // VERIFICA SI LA LISTA DE SESIONES ESTÁ VACÍA
             {
@@ -74,12 +74,18 @@ namespace El_Butacazo_Back.Controllers
                 return BadRequest("La sesión no puede ser nula."); // DEVUELVE ERROR SI EL OBJETO ES NULO
             }
 
-            // ASIGNA UN NUEVO ID A LA SESIÓN Y LA AGREGA A LA LISTA
-            nuevaSesion.Id = sesiones.Any() ? sesiones.Max(s => s.Id) + 1 : 1;
-            sesiones.Add(nuevaSesion);
+            // CREA UNA NUEVA INSTANCIA DE SESIONES UTILIZANDO EL CONSTRUCTOR
+            var sesion = new Sesiones(
+                nuevaSesion.Numero,   
+                nuevaSesion.Hora,      
+                nuevaSesion.Pelicula   
+            );
+
+            // AGREGA LA SESIÓN A LA LISTA
+            sesiones.Add(sesion);
 
             // DEVUELVE LA NUEVA SESIÓN CREADA
-            return CreatedAtAction(nameof(GetSesionById), new { id = nuevaSesion.Id }, nuevaSesion);
+            return CreatedAtAction(nameof(GetSesionById), new { id = sesion.Id }, sesion);
         }
 
         // ACTUALIZA UNA SESIÓN EXISTENTE
@@ -205,8 +211,9 @@ namespace El_Butacazo_Back.Controllers
                 return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
             }
 
-            return Ok(sesionExistente.Entrada); // DEVUELVE LAS ENTRADAS ASOCIADAS
+            return Ok(sesionExistente.Entradas); // DEVUELVE LAS ENTRADAS ASOCIADAS
         }
+        
     }
 }
 

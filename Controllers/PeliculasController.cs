@@ -1,3 +1,5 @@
+
+// PeliculasController.cs
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System.Collections.Generic;
@@ -11,6 +13,15 @@ namespace El_Butacazo_Back.Controllers
     {
         // LISTA ESTÁTICA PARA ALMACENAR LAS PELÍCULAS
         public static List<Peliculas> peliculas = new List<Peliculas>();
+
+        // CONSTRUCTOR PARA INICIALIZAR LOS DATOS
+        public PeliculasController()
+        {
+            if (!peliculas.Any())
+            {
+                InicializarDatos();
+            }
+        }
 
         // MÉTODO PARA OBTENER TODAS LAS PELÍCULAS
         [HttpGet]
@@ -38,11 +49,11 @@ namespace El_Butacazo_Back.Controllers
         {
             // CREA UNA NUEVA INSTANCIA DE PELÍCULA CON LOS DATOS PROPORCIONADOS
             var nuevaPelicula = new Peliculas(
-                pelicula.Titulo, 
-                pelicula.Genero, 
-                pelicula.Director, 
-                pelicula.Estreno, 
-                pelicula.Duracion, 
+                pelicula.Titulo,
+                pelicula.Genero,
+                pelicula.Director,
+                pelicula.Estreno,
+                pelicula.Duracion,
                 pelicula.Imagen
             );
 
@@ -91,7 +102,7 @@ namespace El_Butacazo_Back.Controllers
         public static void InicializarDatos()
         {
             // AÑADE LAS PELICULAS A LA LISTA
-            peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "https://pics.filmaffinity.com/Shin_Chan_El_superhaeroe-906956455-large.jpg"));
+             peliculas.Add(new Peliculas("Shin-chan", "Animación", "Keiichi Hara", "2024-08-15", "1h 40m", "https://pics.filmaffinity.com/Shin_Chan_El_superhaeroe-906956455-large.jpg"));
             peliculas.Add(new Peliculas("Venom 3", "Acción", "Andy Serkis", "2024-10-18", "1h 52m", "https://pics.filmaffinity.com/Venom_El_aultimo_baile-379990903-large.jpg"));
             peliculas.Add(new Peliculas("Torrente 1", "Comedia", "Santiago Segura", "1998-03-13","1h 37m", "https://pics.filmaffinity.com/torrente_el_brazo_tonto_de_la_ley-769153589-large.jpg"));
             peliculas.Add(new Peliculas("Torrente 2", "Comedia", "Santiago Segura", "2001-03-30","1h 39m", "https://pics.filmaffinity.com/Torrente_2_Misiaon_en_Marbella-426650610-large.jpg"));
