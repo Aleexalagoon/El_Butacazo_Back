@@ -19,12 +19,12 @@ public class Sesiones
         Putacas = new List<Putacas>(); 
         Entradas = new List<Entradas>(); 
 
-        // GENERAR UNA MATRIZ DE BUTACAS (9x9)
-        for (int x = 1; x <= 9; x++) // FILAS (DEL 1 AL 9)
+       
+        for (int x = 1; x <= 10; x++) 
         {
-            for (int y = 1; y <= 9; y++) // COLUMNAS (DEL 1 AL 9)
+            for (int y = 1; y <= 10; y++) 
             {
-                Putacas.Add(new Putacas(x, y)); // CREA Y AÑADE UNA NUEVA BUTACA
+                Putacas.Add(new Putacas(x, y)); 
             }
         }
     }
