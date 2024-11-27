@@ -5,6 +5,7 @@ namespace Models
         public static int nextId = 1;
         public int Id { get; private set; }
         public string Titulo { get; set; }
+        public string Descripcion {get; set;}
         public string Genero { get; set; }
         public string Director { get; set; }
         public string Estreno { get; set; }
@@ -15,10 +16,11 @@ namespace Models
         // Constructor por defecto
 
         // Constructor con parámetros
-        public Peliculas(string titulo, string genero, string director, string estreno, string duracion, string sala, string imagen)
+        public Peliculas(string titulo, string descripcion, string genero, string director, string estreno, string duracion, string sala, string imagen)
         {
             Id = nextId++;
             Titulo = titulo;
+            Descripcion = descripcion;
             Genero = genero;
             Director = director;
             Estreno = estreno;
