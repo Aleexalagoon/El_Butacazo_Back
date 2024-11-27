@@ -9,13 +9,14 @@ namespace Models
         public string Director { get; set; }
         public string Estreno { get; set; }
         public string Duracion { get; set; }
+        public string Sala {get; set;}
         public string Imagen { get; set; }
 
         // Constructor por defecto
         public Peliculas() { }
 
         // Constructor con parámetros
-        public Peliculas(string titulo, string genero, string director, string estreno, string duracion, string imagen)
+        public Peliculas(string titulo, string genero, string director, string estreno, string duracion, string sala, string imagen)
         {
             Id = nextId++;
             Titulo = titulo;
@@ -23,6 +24,7 @@ namespace Models
             Director = director;
             Estreno = estreno;
             Duracion = duracion;
+            Sala = sala;
             Imagen = imagen;
         }
     }
