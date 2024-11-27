@@ -23,7 +23,6 @@ namespace El_Butacazo_Back.Controllers
         {
             if (!sesiones.Any()) // VERIFICA SI LA LISTA DE SESIONES ESTÁ VACÍA
             {
-              
                 // OBTIENE LAS PELÍCULAS DISPONIBLES
                 var peliculas = PeliculasController.peliculas;
 
@@ -74,9 +73,9 @@ namespace El_Butacazo_Back.Controllers
 
             // CREA UNA NUEVA INSTANCIA DE SESIONES UTILIZANDO EL CONSTRUCTOR
             var sesion = new Sesiones(
-                nuevaSesion.Numero,   
-                nuevaSesion.Hora,      
-                nuevaSesion.Pelicula   
+                nuevaSesion.Numero,
+                nuevaSesion.Hora,
+                nuevaSesion.Pelicula
             );
 
             // AGREGA LA SESIÓN A LA LISTA
@@ -124,7 +123,7 @@ namespace El_Butacazo_Back.Controllers
 
         // OBTIENE LAS BUTACAS DE UNA SESIÓN
         [HttpGet("{id}/butacas")]
-        public ActionResult<IEnumerable<Putacas>> GetButacasBySesionId(int id)
+        public ActionResult<IEnumerable<Putacas>> GetPutacasBySesionId(int id)
         {
             var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
 
@@ -147,6 +146,9 @@ namespace El_Butacazo_Back.Controllers
                 return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
             }
 
+            // Lista para almacenar posibles conflictos (putacas ya reservadas)
+            var conflictos = new List<int>();
+
             foreach (var idPutaca in idsPutacas)
             {
                 var putaca = sesionExistente.Putacas.FirstOrDefault(p => p.Id == idPutaca); // BUSCA LA BUTACA POR ID
@@ -158,13 +160,21 @@ namespace El_Butacazo_Back.Controllers
 
                 if (putaca.Estado)
                 {
-                    return BadRequest($"La butaca con ID {idPutaca} ya está reservada."); // DEVUELVE ERROR SI YA ESTÁ RESERVADA
+                    conflictos.Add(idPutaca); // AGREGAR ID DE BUTACA YA RESERVADA
                 }
-
-                putaca.Estado = true; // MARCA LA BUTACA COMO RESERVADA
+                else
+                {
+                    putaca.Estado = true; // MARCAR BUTACA COMO RESERVADA
+                }
             }
 
-            return Ok("Butacas reservadas con éxito."); // CONFIRMA LAS RESERVAS
+            // SI HAY CONFLICTOS, DEVOLVER ERROR CON LISTA DE BUTACAS YA RESERVADAS
+            if (conflictos.Any())
+            {
+                return BadRequest($"Las siguientes putacas ya están reservadas: {string.Join(", ", conflictos)}");
+            }
+
+            return Ok("Putacas reservadas con éxito."); // CONFIRMA LAS RESERVAS
         }
 
         // DESOCUPA BUTACAS DE UNA SESIÓN
@@ -184,18 +194,18 @@ namespace El_Butacazo_Back.Controllers
 
                 if (putaca == null)
                 {
-                    return NotFound($"Butaca con ID {idPutaca} no encontrada en esta sesión."); // DEVUELVE ERROR SI NO EXISTE
+                    return NotFound($"Putaca con ID {idPutaca} no encontrada en esta sesión."); // DEVUELVE ERROR SI NO EXISTE
                 }
 
                 if (!putaca.Estado)
                 {
-                    return BadRequest($"La butaca con ID {idPutaca} ya está desocupada."); // DEVUELVE ERROR SI YA ESTÁ LIBRE
+                    return BadRequest($"La putaca con ID {idPutaca} ya está desocupada."); // DEVUELVE ERROR SI YA ESTÁ LIBRE
                 }
 
                 putaca.Estado = false; // MARCA LA BUTACA COMO DESOCUPADA
             }
 
-            return Ok("Butacas desocupadas con éxito."); // CONFIRMA LAS DESOCUPACIONES
+            return Ok("Putacas desocupadas con éxito."); // CONFIRMA LAS DESOCUPACIONES
         }
 
         // OBTIENE LAS ENTRADAS DE UNA SESIÓN
@@ -211,7 +221,5 @@ namespace El_Butacazo_Back.Controllers
 
             return Ok(sesionExistente.Entradas); // DEVUELVE LAS ENTRADAS ASOCIADAS
         }
-        
     }
 }
-
