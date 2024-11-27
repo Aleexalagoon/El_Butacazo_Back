@@ -13,7 +13,6 @@ namespace Models
         public string Imagen { get; set; }
 
         // Constructor por defecto
-        public Peliculas() { }
 
         // Constructor con parámetros
         public Peliculas(string titulo, string genero, string director, string estreno, string duracion, string sala, string imagen)
