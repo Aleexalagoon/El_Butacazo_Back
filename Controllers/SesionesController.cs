@@ -176,38 +176,6 @@ namespace El_Butacazo_Back.Controllers
 
             return Ok("Putacas reservadas con éxito."); // CONFIRMA LAS RESERVAS
         }
-
-        // DESOCUPA BUTACAS DE UNA SESIÓN
-        [HttpPut("{id}/butacas/desocupar")]
-        public ActionResult DesocuparPutacas(int id, [FromBody] List<int> idsPutacas)
-        {
-            var sesionExistente = sesiones.FirstOrDefault(s => s.Id == id); // BUSCA LA SESIÓN POR ID
-
-            if (sesionExistente == null)
-            {
-                return NotFound("Sesión no encontrada."); // DEVUELVE ERROR SI NO EXISTE
-            }
-
-            foreach (var idPutaca in idsPutacas)
-            {
-                var putaca = sesionExistente.Putacas.FirstOrDefault(p => p.Id == idPutaca); // BUSCA LA BUTACA POR ID
-
-                if (putaca == null)
-                {
-                    return NotFound($"Putaca con ID {idPutaca} no encontrada en esta sesión."); // DEVUELVE ERROR SI NO EXISTE
-                }
-
-                if (!putaca.Estado)
-                {
-                    return BadRequest($"La putaca con ID {idPutaca} ya está desocupada."); // DEVUELVE ERROR SI YA ESTÁ LIBRE
-                }
-
-                putaca.Estado = false; // MARCA LA BUTACA COMO DESOCUPADA
-            }
-
-            return Ok("Putacas desocupadas con éxito."); // CONFIRMA LAS DESOCUPACIONES
-        }
-
         // OBTIENE LAS ENTRADAS DE UNA SESIÓN
         [HttpGet("{id}/entradas")]
         public ActionResult<IEnumerable<Entradas>> GetEntradasBySesionId(int id)
