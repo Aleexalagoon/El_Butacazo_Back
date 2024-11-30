@@ -2,23 +2,21 @@ namespace Models
 {
     public class Peliculas
     {
-        public static int nextId = 1;
-        public int Id { get; private set; }
-        public string Titulo { get; set; }
-        public string Descripcion {get; set;}
-        public string Genero { get; set; }
-        public string Director { get; set; }
-        public string Estreno { get; set; }
-        public string Duracion { get; set; }
-        public string Sala {get; set;}
-        public string Imagen { get; set; }
+        public static int nextId = 1; 
+        public int Id { get; private set; } 
+        public string Titulo { get; set; } 
+        public string Descripcion { get; set; } 
+        public string Genero { get; set; } 
+        public string Director { get; set; } 
+        public string Estreno { get; set; } 
+        public string Duracion { get; set; } 
+        public string Sala { get; set; } 
+        public string Imagen { get; set; } 
 
-        // Constructor por defecto
-
-        // Constructor con parámetros
+        // CONSTRUCTOR PARA INICIALIZAR TODOS LOS DATOS DE LA PELÍCULA
         public Peliculas(string titulo, string descripcion, string genero, string director, string estreno, string duracion, string sala, string imagen)
         {
-            Id = nextId++;
+            Id = nextId++; 
             Titulo = titulo;
             Descripcion = descripcion;
             Genero = genero;
