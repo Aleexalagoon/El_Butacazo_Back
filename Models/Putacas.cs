@@ -10,7 +10,7 @@ public class Putacas
 
     public Putacas(int fila, int columna)
     {
-        Id = nextId++;
+        Id = nextId++; // ASIGNA UN ID ÚNICO
         Fila = fila;
         Columna = columna;
         Estado = false; // INICIALMENTE LA BUTACA ESTÁ DISPONIBLE

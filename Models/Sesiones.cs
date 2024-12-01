@@ -1,6 +1,5 @@
 namespace Models;
 
-// ESTA CLASE REPRESENTA UNA SESIÓN DE CINE
 public class Sesiones
 {
     // UN CONTADOR ESTÁTICO PARA ASIGNAR UN ID ÚNICO A CADA SESIÓN
@@ -17,7 +16,7 @@ public class Sesiones
     public Sesiones(int numero, string hora, Peliculas pelicula)
     {
         // SE ASIGNA UN ID ÚNICO USANDO EL CONTADOR ESTÁTICO Y LUEGO SE INCREMENTA EL CONTADOR
-        Id = nextId++;         
+        Id = nextId++; // ASIGNA UN ID ÚNICO        
         Numero = numero;       
         Hora = hora;           
         Pelicula = pelicula;   

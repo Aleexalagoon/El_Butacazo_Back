@@ -16,7 +16,7 @@ namespace Models
         // CONSTRUCTOR PARA INICIALIZAR TODOS LOS DATOS DE LA PELÍCULA
         public Peliculas(string titulo, string descripcion, string genero, string director, string estreno, string duracion, string sala, string imagen)
         {
-            Id = nextId++; 
+            Id = nextId++; // ASIGNA UN ID ÚNICO
             Titulo = titulo;
             Descripcion = descripcion;
             Genero = genero;
