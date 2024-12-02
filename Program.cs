@@ -3,7 +3,6 @@ using El_Butacazo_Back.Controllers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,5 +40,8 @@ app.MapControllers();
 // Inicializar datos estáticos
 PeliculasController.InicializarDatos();
 SesionesController.InicializarDatos();
-app.Run();
 
+// Configurar explícitamente el puerto 80
+app.Urls.Add("http://*:80");
+
+app.Run();
