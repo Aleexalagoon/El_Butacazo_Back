@@ -41,7 +41,4 @@ app.MapControllers();
 PeliculasController.InicializarDatos();
 SesionesController.InicializarDatos();
 
-// Configurar explícitamente el puerto 80
-app.Urls.Add("http://*:80");
-
 app.Run();
