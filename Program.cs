@@ -40,5 +40,6 @@ app.MapControllers();
 // Inicializar datos estáticos
 PeliculasController.InicializarDatos();
 SesionesController.InicializarDatos();
+ComentariosController.InicializarDatos();
 
 app.Run();

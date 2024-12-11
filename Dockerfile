@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=build /app .
 
 # Exponer el puerto para la API
-EXPOSE 80
+EXPOSE 27305
 
 # Definir el comando para ejecutar la aplicación
 ENTRYPOINT ["dotnet", "EL_BUTACAZO_BACK.dll"]
